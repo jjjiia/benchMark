@@ -31,7 +31,9 @@ d3.select("#chart").append("div").style("width","44px").html("stop").attr("class
     .style("display","none"); 
 
 var days = ["20170728","20170802","20170803","20170804","20170806"]
-var day1 = "20170806"
+var weatherCondition = {"20170728":"partlyCloudy","20170802":"rain","20170803":"partlyCloudy","20170804":"clear","20170806":"partlyCloudy"}
+var weatherDegrees = {"20170728":74,"20170802":75,"20170803":75,"20170804":61,"20170806":71}
+var day1 = "20170728"
 var config = {
     timer:null,
     index:null,
@@ -42,7 +44,9 @@ setupQueue(day1)
 
 for(var d in days){
     var day = days[d]
-    d3.select("#days").append("div").html(day).attr("class","tab _"+day).style("width","100px").style("display","inline-block")
+    var iconLink = "<img src=\""+weatherCondition[day]+".png\" alt=\""+weatherCondition[day]+" width=\"80\">"
+    d3.select("#days").append("div").html(day+"<br/>"+weatherDegrees[day]+" &#176 F<br/>"+ iconLink)
+        .attr("class","tab _"+day).style("width","100px").style("display","inline-block")
         .style("text-align","center")
         .style("border-left","1px solid #FB5151")
         .style("border-right","1px solid #FB5151")
@@ -56,7 +60,6 @@ for(var d in days){
             var currentDay = d3.select(this).attr("class").replace("_","")
             d3.select(".day_svg").remove()
             d3.select(".playBar").attr("x",70)
-            console.log(currentDay)
             config.day = currentDay
             config.index = null
             clearInterval(config.timer)
@@ -97,11 +100,13 @@ function loadData(error){
       return data
 }
 function convertToSeconds(timeStamp){
+  //  console.log(timeStamp)
     var tl = timeStamp.split(":")
     return parseInt(tl[0])*60*60+parseInt(tl[1])*60+parseInt(tl[2])
 }
 
 function setupChart(data){
+//    console.log(data)
     var barWidth = 10
     var width = 500
     var height = barWidth*2*6
@@ -130,7 +135,7 @@ function setupChart(data){
     drawPlayBar(minMax)
     d3.select(".playButton").on("click",function(){
         playBar(data,minMax)
-        console.log(config.start)
+ //       console.log(config.start)
         d3.select(".playButton").style("display","none")
         d3.select(".stopButton").style("display","block")
     })
@@ -220,13 +225,17 @@ function getMaxMin(data){
     var max = 0
     for(var i in data){
         var dayData = data[i]
-        for(var j in dayData){
-            var benchData = dayData[j]
-            if(j!="columns"){
-                var startTime = convertToSeconds(benchData.start)
-                var endTime = convertToSeconds(benchData.end)
-                if(min > startTime){min = startTime}
-                if(max<endTime){max = endTime}
+        if(dayData.length>1){
+            for(var j in dayData){
+                var benchData = dayData[j]
+                if(benchData.start!=undefined && benchData.end!=undefined){
+                    if(j!="columns"){
+                        var startTime = convertToSeconds(benchData.start)
+                        var endTime = convertToSeconds(benchData.end)
+                        if(min > startTime){min = startTime}
+                        if(max<endTime){max = endTime}
+                    }
+                }
             }
         }
     }
@@ -234,6 +243,7 @@ function getMaxMin(data){
 }
 
 function  drawBenchChart(data,minMax,index){
+    console.log(data)
     var colors =["#af9030","#e7902f","#d0864e","#d56d1f","#e4b36f","#d6bd34"]
     var barWidth = 10
     var width = 500
