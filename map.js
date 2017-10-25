@@ -69,7 +69,7 @@ for(var d in days){
    // .style("border-top","1px solid #FB5151")
     //setupQueue(day)
 }
-//d3.select("._"+day1).style("font-family","gothamM")
+d3.select("._"+day1).style("background-color","#f9c7c7")
 
 function setupQueue(day){
     var benches = [1,2,3,4,5,6]
