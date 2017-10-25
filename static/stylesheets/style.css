@@ -22,7 +22,25 @@ svg {
   width: 100%;
   height: 100%;
 }
-
+.axis line{
+    stroke:#FB5151;
+    stroke-dasharray: 2,4;
+    
+}
+.axis path{
+    stroke:#FB5151;
+}
+.axis text{
+    fill:#FB5151;
+}
+.playButton{
+    font-family:gothamM;
+    
+}
+.stopButton{
+    font-family:gothamM;
+    
+}
 #header{
   background-color:#FB5151;
   color:#fff;
@@ -45,10 +63,16 @@ svg {
   overflow:auto;
 }
 #map { 
-  border:1px solid #FB5151;
   margin: auto auto;
+  overflow:hidden;
   height:500px;
   margin: auto auto;
+  width:1000px;
+}
+#mapTile{
+    overflow:hidden;
+    border:1px solid #FB5151;
+    
 }
 #chart { 
   border:1px solid #FB5151;
