@@ -5,7 +5,7 @@ var map = new mapboxgl.Map({
     center: [-71.08944,42.36153],
     zoom:21,  
     //maxZoom:20,
-   // minZoom:19.5,
+//    minZoom:18,
     interactive: false
     
 })
@@ -49,6 +49,8 @@ for(var d in days){
         .style("padding","2px").attr("class","_"+day)
         .style("cursor", "pointer")
         .on("click",function(){
+            d3.select(".stopButton").style("display","none")
+            d3.select(".playButton").style("display","block")
             d3.selectAll(".tab").style("font-family","gothamL")//.style("background-color","#FB5151").style("color","#fff")
             d3.select(this).style("font-family","gothamM")
             var currentDay = d3.select(this).attr("class").replace("_","")
@@ -57,6 +59,8 @@ for(var d in days){
             console.log(currentDay)
             config.day = currentDay
             config.index = null
+            clearInterval(config.timer)
+            
             setupQueue(currentDay)
         })
    // .style("border-top","1px solid #FB5151")
@@ -370,7 +374,7 @@ function mapDraw(){
           .attr("fill","#FB5151")
           .on("mouseover",function(){
               var id = d3.select(this).attr("class")
-              ripple(id)
+           //   ripple(id)
               d3.select(this).style("cursor", "pointer"); 
           })  
           
