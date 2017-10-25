@@ -46,7 +46,7 @@ for(var d in days){
     var day = days[d]
     var iconLink = "<img src=\""+weatherCondition[day]+".png\" alt=\""+weatherCondition[day]+" width=\"80\">"
     d3.select("#days").append("div").html(day+"<br/>"+weatherDegrees[day]+" &#176 F<br/>"+ iconLink)
-        .attr("class","tab _"+day).style("width","100px").style("display","inline-block")
+        .attr("class","_"+day).style("width","100px").style("height","100px").style("display","inline-block")
         .style("text-align","center")
         .style("border-left","1px solid #FB5151")
         .style("border-right","1px solid #FB5151")
@@ -55,8 +55,8 @@ for(var d in days){
         .on("click",function(){
             d3.select(".stopButton").style("display","none")
             d3.select(".playButton").style("display","block")
-            d3.selectAll(".tab").style("font-family","gothamL")//.style("background-color","#FB5151").style("color","#fff")
-            d3.select(this).style("font-family","gothamM")
+            d3.selectAll("#days div").style("background-color","#fff")//.style("background-color","#FB5151").style("color","#fff")
+            d3.select(this).style("background-color","#f9c7c7")
             var currentDay = d3.select(this).attr("class").replace("_","")
             d3.select(".day_svg").remove()
             d3.select(".playBar").attr("x",70)
@@ -69,7 +69,7 @@ for(var d in days){
    // .style("border-top","1px solid #FB5151")
     //setupQueue(day)
 }
-d3.select("._"+day1).style("font-family","gothamM")
+//d3.select("._"+day1).style("font-family","gothamM")
 
 function setupQueue(day){
     var benches = [1,2,3,4,5,6]

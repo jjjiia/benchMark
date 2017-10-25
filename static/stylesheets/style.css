@@ -81,7 +81,7 @@ svg {
   height:500px;
   padding:30px;
   color:#FB5151;
-  
+  overflow:hidden;
 }
 .hidden {
 	display: none;
